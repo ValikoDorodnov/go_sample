@@ -1,6 +1,8 @@
 package v1
 
 import (
+	"net/http"
+
 	"github.com/ValikoDorodnov/go_sample/internal/service"
 	"github.com/gorilla/mux"
 )
@@ -15,8 +17,10 @@ func NewHandler(greetingService *service.GreetingService) *Handler {
 	}
 }
 
-func (h Handler) Init() *mux.Router {
+func (h *Handler) GetRouter() *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/", h.greetingService.HelloHandler)
+
+	r.HandleFunc("/", h.hello).Methods(http.MethodGet)
+
 	return r
 }
