@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  app:
+    build: ./
+    depends_on:
+      - postgres
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - ${APP_PORT}
+
+  postgres:
+    restart: always
+    image: postgres:12.2-alpine
+    volumes:
+      - postgres-sample-vol:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - ${DB_PORT}
+
+volumes:
+  postgres-sample-vol:
