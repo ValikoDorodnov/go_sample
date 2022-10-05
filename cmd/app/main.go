@@ -13,5 +13,9 @@ func main() {
 	a := app.NewApp(h)
 	r := a.Handler.Init()
 
-	http.Handle("/test", r)
+	http.Handle("/", r)
+	err := http.ListenAndServe(":8000", nil)
+	if err != nil {
+		return
+	}
 }
