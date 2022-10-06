@@ -9,6 +9,7 @@ import (
 
 type Config struct {
 	Rest RestConfig `mapstructure:",squash"`
+	Db   DbConfig   `mapstructure:",squash"`
 }
 
 func init() {

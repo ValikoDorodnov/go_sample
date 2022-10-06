@@ -21,6 +21,7 @@ func (h *Handler) GetRouter() *mux.Router {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", h.hello).Methods(http.MethodGet)
+	r.HandleFunc("/db-test", h.dbTest).Methods(http.MethodGet)
 
 	return r
 }

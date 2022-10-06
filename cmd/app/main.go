@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/ValikoDorodnov/go_sample/internal/repository"
+	"github.com/ValikoDorodnov/go_sample/pkg/db"
 	"os"
 	"os/signal"
 	"syscall"
@@ -15,8 +17,10 @@ import (
 
 func main() {
 	conf := config.InitConfig()
-
-	greetService := service.NewGreetingService()
+	conn, _ := db.Init(conf.Db)
+	defer conn.Close()
+	repo := repository.NewGreetingRepository(conn)
+	greetService := service.NewGreetingService(repo)
 	handler := v1.NewHandler(greetService)
 
 	srv := http.NewRestServer(conf.Rest, handler.GetRouter())
