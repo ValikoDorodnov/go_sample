@@ -3,11 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/ValikoDorodnov/go_sample/internal/repository"
-	"github.com/ValikoDorodnov/go_sample/pkg/db"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/ValikoDorodnov/go_sample/internal/repository"
+	"github.com/ValikoDorodnov/go_sample/pkg/db"
 
 	"github.com/ValikoDorodnov/go_sample/internal/config"
 	"github.com/ValikoDorodnov/go_sample/internal/delivery/http"
@@ -17,7 +18,10 @@ import (
 
 func main() {
 	conf := config.InitConfig()
-	conn, _ := db.Init(conf.Db)
+	conn, err := db.Init(conf.Db)
+	if err != nil {
+		fmt.Printf("err %v", err)
+	}
 	defer conn.Close()
 	repo := repository.NewGreetingRepository(conn)
 	greetService := service.NewGreetingService(repo)

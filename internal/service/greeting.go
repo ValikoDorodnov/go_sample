@@ -1,6 +1,8 @@
 package service
 
 import (
+	"context"
+
 	"github.com/ValikoDorodnov/go_sample/internal/entity"
 	"github.com/ValikoDorodnov/go_sample/internal/repository"
 )
@@ -19,6 +21,6 @@ func (gs *GreetingService) HelloProcess() (string, error) {
 	return "Hello", nil
 }
 
-func (gs *GreetingService) DbProcess() ([]entity.GreetingEntity, error) {
-	return gs.repo.All()
+func (gs *GreetingService) DbProcess(ctx context.Context) ([]*entity.GreetingEntity, error) {
+	return gs.repo.All(ctx)
 }

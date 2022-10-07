@@ -1,18 +1,20 @@
 package db
 
 import (
-	"database/sql"
 	"fmt"
+
 	"github.com/ValikoDorodnov/go_sample/internal/config"
+	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )
 
-func Init(config config.DbConfig) (*sql.DB, error) {
+func Init(c config.DbConfig) (*sqlx.DB, error) {
 
 	connection := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=%s",
-		config.Host, config.User, config.Pass, config.Name, config.SllMode)
+		c.Host, c.User, c.Pass, c.Name, c.SllMode,
+	)
 
-	db, err := sql.Open("postgres", connection)
+	db, err := sqlx.Connect("postgres", connection)
 
 	if err != nil {
 		return nil, err

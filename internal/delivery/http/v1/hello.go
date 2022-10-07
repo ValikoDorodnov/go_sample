@@ -14,8 +14,9 @@ func (h *Handler) hello(w http.ResponseWriter, _ *http.Request) {
 	rest.ResponseOk(w, resp)
 }
 
-func (h *Handler) dbTest(w http.ResponseWriter, _ *http.Request) {
-	resp, err := h.greetingService.DbProcess()
+func (h *Handler) dbTest(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	resp, err := h.greetingService.DbProcess(ctx)
 	if err != nil {
 		rest.ResponseErrors(w, err)
 	}

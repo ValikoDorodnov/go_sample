@@ -1,33 +1,30 @@
 package repository
 
 import (
-	"database/sql"
+	"context"
+
 	"github.com/ValikoDorodnov/go_sample/internal/entity"
+	"github.com/jmoiron/sqlx"
 )
 
 type GreetingRepository struct {
-	db *sql.DB
+	db *sqlx.DB
 }
 
-func NewGreetingRepository(db *sql.DB) *GreetingRepository {
+func NewGreetingRepository(db *sqlx.DB) *GreetingRepository {
 	return &GreetingRepository{
 		db: db,
 	}
 }
 
-func (r *GreetingRepository) All() ([]entity.GreetingEntity, error) {
-	rows, err := r.db.Query("SELECT * FROM greeting")
+func (r *GreetingRepository) All(ctx context.Context) ([]*entity.GreetingEntity, error) {
+	var data []*entity.GreetingEntity
+
+	query := `SELECT * FROM greeting`
+
+	err := r.db.SelectContext(ctx, &data, query)
 	if err != nil {
 		return nil, err
-	}
-	var data []entity.GreetingEntity
-	for rows.Next() {
-		var r entity.GreetingEntity
-		err = rows.Scan(&r.Id, &r.Name)
-		if err != nil {
-			return nil, err
-		}
-		data = append(data, r)
 	}
 
 	return data, nil

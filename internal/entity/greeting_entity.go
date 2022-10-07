@@ -1,6 +1,6 @@
 package entity
 
 type GreetingEntity struct {
-	Id   int
-	Name string
+	Id   int    `db:"id"`
+	Name string `db:"name"`
 }
