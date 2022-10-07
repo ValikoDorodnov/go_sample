@@ -9,7 +9,7 @@ import (
 func (h *Handler) hello(w http.ResponseWriter, _ *http.Request) {
 	resp, err := h.greetingService.HelloProcess()
 	if err != nil {
-		rest.ResponseErrors(w, err, h.log)
+		rest.ResponseErrors(w, err)
 	}
 	rest.ResponseOk(w, resp)
 }

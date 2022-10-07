@@ -1,7 +1,6 @@
 package v1
 
 import (
-	"github.com/ValikoDorodnov/go_sample/pkg/logger"
 	"net/http"
 
 	"github.com/ValikoDorodnov/go_sample/internal/service"
@@ -10,13 +9,11 @@ import (
 
 type Handler struct {
 	greetingService *service.GreetingService
-	log             *logger.Logger
 }
 
-func NewHandler(greetingService *service.GreetingService, log *logger.Logger) *Handler {
+func NewHandler(greetingService *service.GreetingService) *Handler {
 	return &Handler{
 		greetingService: greetingService,
-		log:             log,
 	}
 }
 

@@ -29,7 +29,7 @@ func main() {
 
 	repo := repository.NewGreetingRepository(dbConnection)
 	greetService := service.NewGreetingService(repo)
-	handler := v1.NewHandler(greetService, log)
+	handler := v1.NewHandler(greetService)
 
 	srv := http.NewRestServer(conf.Rest, handler.GetRouter())
 
