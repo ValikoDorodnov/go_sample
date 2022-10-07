@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     ports:
-      - ${APP_PORT}
+      - ${APP_DOCKER_PORT}
 
   postgres:
     restart: always
@@ -22,7 +22,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     ports:
-      - ${DB_PORT}
+      - ${DB_DOCKER_PORT}
 
 volumes:
   postgres-sample-vol:

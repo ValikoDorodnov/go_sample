@@ -10,8 +10,8 @@ import (
 
 func Init(c config.DbConfig) (*sqlx.DB, error) {
 
-	connection := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=%s",
-		c.Host, c.User, c.Pass, c.Name, c.SllMode,
+	connection := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+		c.Host, c.Port, c.User, c.Pass, c.Name, c.SllMode,
 	)
 
 	db, err := sqlx.Connect("postgres", connection)
