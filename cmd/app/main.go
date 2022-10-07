@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/ValikoDorodnov/go_sample/pkg/logger"
 	"os"
 	"os/signal"
 	"syscall"
@@ -18,21 +19,24 @@ import (
 
 func main() {
 	conf := config.InitConfig()
-	conn, err := db.Init(conf.Db)
+	log := logger.NewLogger()
+
+	dbConnection, err := db.Init(conf.Db)
 	if err != nil {
-		fmt.Printf("err %v", err)
+		log.Error(fmt.Sprintf("err %v", err))
 	}
-	defer conn.Close()
-	repo := repository.NewGreetingRepository(conn)
+	defer dbConnection.Close()
+
+	repo := repository.NewGreetingRepository(dbConnection)
 	greetService := service.NewGreetingService(repo)
-	handler := v1.NewHandler(greetService)
+	handler := v1.NewHandler(greetService, log)
 
 	srv := http.NewRestServer(conf.Rest, handler.GetRouter())
 
 	go func() {
 		fmt.Printf("rest server started at port %s", conf.Rest.Port)
 		if err := srv.Run(); err != nil {
-			fmt.Printf("error occured while running http server: %s", err.Error())
+			log.Error(fmt.Sprintf("error occured while running http server: %s", err.Error()))
 			return
 		}
 	}()
@@ -42,6 +46,6 @@ func main() {
 	<-quit
 
 	if err := srv.Shutdown(context.Background()); err != nil {
-		fmt.Printf("error occured on server shutting down: %s", err.Error())
+		log.Error(fmt.Sprintf("error occured on server shutting down: %s", err.Error()))
 	}
 }

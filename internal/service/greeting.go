@@ -21,6 +21,6 @@ func (gs *GreetingService) HelloProcess() (string, error) {
 	return "Hello", nil
 }
 
-func (gs *GreetingService) DbProcess(ctx context.Context) ([]*entity.GreetingEntity, error) {
+func (gs *GreetingService) HelloDbProcess(ctx context.Context) ([]*entity.GreetingEntity, error) {
 	return gs.repo.All(ctx)
 }

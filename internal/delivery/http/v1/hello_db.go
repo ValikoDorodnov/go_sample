@@ -1,13 +1,13 @@
 package v1
 
 import (
-	"net/http"
-
 	"github.com/ValikoDorodnov/go_sample/pkg/rest"
+	"net/http"
 )
 
-func (h *Handler) hello(w http.ResponseWriter, _ *http.Request) {
-	resp, err := h.greetingService.HelloProcess()
+func (h *Handler) helloDb(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	resp, err := h.greetingService.HelloDbProcess(ctx)
 	if err != nil {
 		rest.ResponseErrors(w, err, h.log)
 	}
