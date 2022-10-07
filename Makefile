@@ -8,4 +8,4 @@ docker-up-db:
 	docker-compose up -d --build postgres
 
 run-test:
-	go test ./test
+	go test ./...

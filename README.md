@@ -13,4 +13,7 @@
     - [repository](internal/repository): Репозитории работы с данными
     - [service](internal/service): Сервисы
 3. [pkg](pkg): Код библиотек, пригодных для использования в сторонних приложениях
-4. [test](test): Директория тестов
+
+### Тесты
+Тесты следует писать рядом с файлом, который вы тестируете
+[greeting_test.go](internal/service/greeting_test.go)
